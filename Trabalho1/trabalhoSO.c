@@ -6,6 +6,7 @@ int jogador_vez;
 int vitoria = 0;
 int empate = 0;
 int tamanho;
+int numero_pecas = 0;
 
 // chega se há vencedor na horizontal
 void *vencedor_horizontal(void *arg_tabuleiro) {
@@ -13,20 +14,16 @@ void *vencedor_horizontal(void *arg_tabuleiro) {
     for (int linha = 0; linha < tamanho; linha++) {
         int index_vencer = 0;
         for (int coluna = 0; coluna < tamanho; coluna++) {
-            if (((tabuleiro[linha][coluna] == tabuleiro[linha][coluna+1])
-            && (tabuleiro[linha][coluna] == jogador_vez))
-            || (tabuleiro[linha][coluna] == tabuleiro[linha][coluna-1])
-            && (tabuleiro[linha][coluna] == jogador_vez)){
-                index_vencer++;
+            if (tabuleiro[linha][coluna] == jogador_vez){
+            index_vencer++;
+                if(index_vencer == numero_pecas){
+                    printf("\nJogador %d é o vencedor!\n", jogador_vez);
+                    vitoria = 1;
+                }
             }
             else {
-            index_vencer = index_vencer;
+            index_vencer = 0;
             }
-
-        }
-        if (index_vencer >= tamanho/2) {
-            printf("\nJogador %d é o vencedor!\n", jogador_vez);
-            vitoria = 1;
         }
     }
     return NULL;
@@ -38,18 +35,20 @@ void *vencedor_vertical(void *arg_tabuleiro) {
     for (int linha = 0; linha < tamanho; linha++) {
         int index_vencer = 0;
         for (int coluna = 0; coluna < tamanho; coluna++) {
-            if (tabuleiro[coluna][linha] == jogador_vez) {
-                index_vencer++;
+            if (tabuleiro[coluna][linha] == jogador_vez){
+            index_vencer++;
+                if(index_vencer == numero_pecas){
+                    printf("\nJogador %d é o vencedor!\n", jogador_vez);
+                    vitoria = 1;
+                }
             }
-        }
-        if (index_vencer >= tamanho/2) {
-            printf("\nJogador %d é o vencedor!!\n", jogador_vez);
-            vitoria = 1;
+            else {
+            index_vencer = 0;
+            }
         }
     }
     return NULL;
 }
-
 //checa se há vencedor na diagonal
 void *test_venceu_diagonal(void *arg_tabuleiro) {
 }
@@ -58,12 +57,12 @@ void *test_venceu_diagonal(void *arg_tabuleiro) {
 // método main para a execução do Gomoku
 int main() {
 
-    int numero_pecas;
+
     printf("Digite o numero de peças para ganhar o jogo: \n");
     scanf("%d", &numero_pecas);
     tamanho = numero_pecas*2;
 
-    //cria tabuleiro 2*N por 2*N
+    //cria tabuleiro
     int **tabuleiro = (int **)malloc(tamanho * sizeof(int *));
     for (int i=0; i<tamanho; i++)
          tabuleiro[i] = (int *)malloc(tamanho * sizeof(int));
