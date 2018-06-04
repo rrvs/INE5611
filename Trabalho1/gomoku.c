@@ -206,7 +206,7 @@ int main() {
         pthread_create(&checa_horiz, NULL, vencedor_horizontal, tabuleiro);
         pthread_create(&checa_vertical, NULL, vencedor_vertical, tabuleiro);
         pthread_create(&checa_diagonal_principal, NULL,vencedor_diagonal_principal,tabuleiro);
-        pthread_create(&checa_diagonal_secundaria, NULL, vencedor_diagonal_principal, tabuleiro);
+        pthread_create(&checa_diagonal_secundaria, NULL, vencedor_diagonal_secundaria, tabuleiro);
 
         //execução em join
         pthread_join(checa_horiz, NULL);
